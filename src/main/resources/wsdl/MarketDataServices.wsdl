@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://mds.soacourse.unsw.edu.au" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MarketDataServices"
+	targetNamespace="http://mds.soacourse.unsw.edu.au">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://mds.soacourse.unsw.edu.au">
+			<xsd:element name="ImportMarketDataReq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="sec" nillable="false" type="xsd:string" />
+						<xsd:element name="startDate" nillable="false" type="xsd:string" />
+						<xsd:element name="endDate" nillable="false" type="xsd:string" />
+						<xsd:element name="dataSourceURL" nillable="false"
+							type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="ImportMarketDataResp">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="eventSetId" nillable="false" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="DownloadFileReq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="eventSetId" nillable="false" type="xsd:string" />
+						<xsd:element name="fileType" nillable="false" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="DownloadFileResp">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="data" nillable="false" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="ConvertMarketDataReq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="eventSetId" nillable="false" type="xsd:string" />
+						<xsd:element name="targetCurrency" nillable="false"
+							type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="ConvertMarketDataResp">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="eventSetId" nillable="false" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="YahooExchangeRateReq">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="baseCurrencyCode" nillable="false"
+							type="xsd:string" />
+						<xsd:element name="targetCurrencyCode" nillable="false"
+							type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="YahooExchangeRateResp">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="rate" nillable="false" type="xsd:string" />
+						<xsd:element name="asAt" nillable="false" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="ServiceFaultType">
+				<xsd:sequence>
+					<xsd:element name="errcode" type="xsd:string" />
+					<xsd:element name="errtext" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="InvalidURL" type="tns:ServiceFaultType" />
+
+			<xsd:element name="InvalidEventSetId" type="tns:ServiceFaultType" />
+
+			<xsd:element name="InvalidSECCode" type="tns:ServiceFaultType" />
+
+			<xsd:element name="InvalidDates" type="tns:ServiceFaultType" />
+
+			<xsd:element name="InvalidFileType" type="tns:ServiceFaultType" />
+
+			<xsd:element name="InvalidCurrencyCode" type="tns:ServiceFaultType" />
+
+			<xsd:element name="ProgramError" type="tns:ServiceFaultType" />
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="ImportMarketDataReqMsg">
+		<wsdl:part element="tns:ImportMarketDataReq" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="ImportMarketDataRespMsg">
+		<wsdl:part element="tns:ImportMarketDataResp" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="DownloadFileReqMsg">
+		<wsdl:part element="tns:DownloadFileReq" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="DownloadFileRespMsg">
+		<wsdl:part element="tns:DownloadFileResp" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="ConvertMarketDataReqMsg">
+		<wsdl:part element="tns:ConvertMarketDataReq" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="ConvertMarketDataRespMsg">
+		<wsdl:part element="tns:ConvertMarketDataResp" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="YahooExchangeRateReqMsg">
+		<wsdl:part element="tns:YahooExchangeRateReq" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="YahooExchangeRateRespMsg">
+		<wsdl:part element="tns:YahooExchangeRateResp" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="ImportMarketDataFaultMsg">
+		<wsdl:part element="tns:YahooExchangeRateResp" name="parameters" />
+	</wsdl:message>
+
+	<wsdl:message name="InvalidURLMsg">
+		<wsdl:part name="parameters" element="tns:InvalidURL" />
+	</wsdl:message>
+
+	<wsdl:message name="InvalidEventSetIdMsg">
+		<wsdl:part name="parameters" element="tns:InvalidEventSetId" />
+	</wsdl:message>
+
+	<wsdl:message name="InvalidSECCodeMsg">
+		<wsdl:part name="parameters" element="tns:InvalidSECCode" />
+	</wsdl:message>
+
+	<wsdl:message name="InvalidDatesMsg">
+		<wsdl:part name="parameters" element="tns:InvalidDates" />
+	</wsdl:message>
+
+	<wsdl:message name="InvalidFileTypeMsg">
+		<wsdl:part name="parameters" element="tns:InvalidFileType" />
+	</wsdl:message>
+
+	<wsdl:message name="InvalidCurrencyCodeMsg">
+		<wsdl:part name="parameters" element="tns:InvalidCurrencyCode" />
+	</wsdl:message>
+
+	<wsdl:message name="ProgramErrorMsg">
+		<wsdl:part name="parameters" element="tns:ProgramError" />
+	</wsdl:message>
+
+	<wsdl:portType name="MarketDataServices">
+		<wsdl:operation name="importMarketData">
+			<wsdl:input message="tns:ImportMarketDataReqMsg" />
+			<wsdl:output message="tns:ImportMarketDataRespMsg" />
+			<wsdl:fault name="InvalidURL" message="tns:InvalidURLMsg" />
+			<wsdl:fault name="InvalidSECCode" message="tns:InvalidSECCodeMsg" />
+			<wsdl:fault name="InvalidDates" message="tns:InvalidDatesMsg" />
+			<wsdl:fault name="ProgramError" message="tns:ProgramErrorMsg" />
+		</wsdl:operation>
+
+		<wsdl:operation name="downloadFile">
+			<wsdl:input message="tns:DownloadFileReqMsg" />
+			<wsdl:output message="tns:DownloadFileRespMsg" />
+			<wsdl:fault name="InvalidEventSetId" message="tns:InvalidEventSetIdMsg" />
+			<wsdl:fault name="InvalidFileType" message="tns:InvalidFileTypeMsg" />
+			<wsdl:fault name="ProgramError" message="tns:ProgramErrorMsg" />
+		</wsdl:operation>
+
+		<wsdl:operation name="convertMarketData">
+			<wsdl:input message="tns:ConvertMarketDataReqMsg" />
+			<wsdl:output message="tns:ConvertMarketDataRespMsg" />
+			<wsdl:fault name="InvalidEventSetId" message="tns:InvalidEventSetIdMsg" />
+			<wsdl:fault name="InvalidCurrencyCode" message="tns:InvalidCurrencyCodeMsg" />
+			<wsdl:fault name="ProgramError" message="tns:ProgramErrorMsg" />
+		</wsdl:operation>
+
+		<wsdl:operation name="yahooExchangeRate">
+			<wsdl:input message="tns:YahooExchangeRateReqMsg" />
+			<wsdl:output message="tns:YahooExchangeRateRespMsg" />
+			<wsdl:fault name="InvalidCurrencyCode" message="tns:InvalidCurrencyCodeMsg" />
+			<wsdl:fault name="ProgramError" message="tns:ProgramErrorMsg" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="MarketDataServicesSOAP" type="tns:MarketDataServices">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="importMarketData">
+			<soap:operation soapAction="http://mds.soacourse.unsw.edu.au/importMarketData" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="InvalidURL">
+				<soap:fault name="InvalidURL" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="InvalidSECCode">
+				<soap:fault name="InvalidSECCode" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="InvalidDates">
+				<soap:fault name="InvalidDates" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="ProgramError">
+				<soap:fault name="ProgramError" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="downloadFile">
+			<soap:operation soapAction="http://mds.soacourse.unsw.edu.au/downloadFile" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="InvalidEventSetId">
+				<soap:fault name="InvalidEventSetId" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="InvalidFileType">
+				<soap:fault name="InvalidFileType" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="ProgramError">
+				<soap:fault name="ProgramError" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="convertMarketData">
+			<soap:operation soapAction="http://mds.soacourse.unsw.edu.au/convertMarketData" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="InvalidEventSetId">
+				<soap:fault name="InvalidEventSetId" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="InvalidCurrencyCode">
+				<soap:fault name="InvalidCurrencyCode" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="ProgramError">
+				<soap:fault name="ProgramError" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="yahooExchangeRate">
+			<soap:operation soapAction="http://mds.soacourse.unsw.edu.au/yahooExchangeRate" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="InvalidCurrencyCode">
+				<soap:fault name="InvalidCurrencyCode" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="ProgramError">
+				<soap:fault name="ProgramError" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="MarketDataServices">
+		<wsdl:port binding="tns:MarketDataServicesSOAP" name="MarketDataServicesSOAP">
+			<soap:address location="http://localhost:8080/MarketDataServices/Services" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
